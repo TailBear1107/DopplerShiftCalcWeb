@@ -1,0 +1,142 @@
+<!DOCTYPE html> <!--註解此為HTML形式網頁-->
+<html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!--增加一個行動裝置的版面宣告-->
+    <title>都卜勒頻移計算機</title>
+    <style>
+        input.button {
+            width:120px;
+            height:40px;
+            border:2px blue none;
+            background-color:rgb(3, 123, 252);
+            border-radius: 5px; 
+            color: white; 
+            font-size: 17px; 
+            font-weight: bold;
+        }
+        input.button:hover {
+            background-color:rgb(3, 94, 252);
+        }
+
+        input.input_f0 {
+            display: inline-block;
+            width:300px;
+            height:36px;
+            line-height:20px;
+            font-size:20px;
+        }
+
+        h1.title {
+            color: black;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        nav.a {
+            color: inherit; /* 移除超連結顏色 */
+            text-decoration: none; /* 移除超連結底線 */
+        }
+
+        nav > ul {
+            list-style: none; /* 移除項目符號 */
+            background-color: bisque;
+            display: block; 
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li:hover {
+        background-color: rgb(195, 195, 195);
+        color: white;
+        }
+
+        .topbar{
+            display: flex;
+            justify-content: space-between;
+        }
+
+    </style>    
+</head>
+
+<body>
+    <nav>
+        <ul class="topbar">
+            <li><h1 class="title">都卜勒頻移計算機</h1></li>
+        </ul>    
+    </nav>
+
+    <br>
+    <center>
+        <p style="font-size: large;">發聲體發射之原始頻率(Hz)
+        <input type="number" name="input_f0 " class="input_f0"id="input_f0" step="0.1" placeholder="請輸入發聲體所發射之原始頻率" required autofocus></p>
+        <br>
+        <p style="font-size: large;">攝氏氣溫(°C)
+        <input type="number" name="input_temp " class="input_f0"id="input_temp" step="0.1" placeholder="請輸入攝氏氣溫(不包含°C)" required></p>
+        <br>
+        <p style="font-size: large;">接收者之移動速度(m/s)
+        <input type="number" name="input_vr " class="input_f0"id="input_vr" step="0.1" placeholder="請輸入接收者的移動速度(m/s)" required></p>
+        <p style="font-size: medium;">接收者向發聲體接近，請輸入正值；接收者對發聲體遠離，請輸入負值。</p>
+        <br>
+        <p style="font-size: large;">發聲體之移動速度(m/s)
+        <input type="number" name="input_vs " class="input_f0"id="input_vs" step="0.1" placeholder="請輸入發聲體的移動速度(m/s)" required></p>
+        <p style="font-size: medium;">發聲體對接收者遠離，請輸入正值；發聲體向接收者接近，請輸入負值。</p>
+        <br>
+    <input type="button" value="開始運算" class="button" id="button" ></center>
+
+    <div id="out">
+    <section>
+        <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</h1></center>
+        <div id="output"><center><p style="font-style: italic;">請輸入各項數值並開始運算以取得結果</p></center></div>
+
+
+    </section>
+    </div>
+
+    <script>
+        document.getElementById("input_vs").addEventListener("keyup",function(event){
+            event.preventDefault();
+            if (event.keyCode === 13) {
+            document.getElementById("button").click();
+            }
+        })
+        //增加一個EventListener，偵測Enter鍵是否被按下，若被按下則代為執行點擊按鈕
+
+        var el = document.querySelector(".button");
+        el.onclick = function proc(){
+
+            var inputElement = document.getElementById('input_f0');
+            var f0 = inputElement.valueAsNumber;
+
+            var inputElement = document.getElementById('input_temp');
+            var temp = inputElement.valueAsNumber;
+
+            var inputElement = document.getElementById('input_vr');
+            var vr = inputElement.valueAsNumber;
+
+            var inputElement = document.getElementById('input_vs');
+            var vs = inputElement.valueAsNumber;
+            //讀取數字輸入格所傳回之訊息
+
+            var v = 331 + 0.6 * temp;
+            //計算音速
+            
+            let numerator = v + vr;
+            let denominator = v + vs;
+
+            var f = f0 * (numerator/denominator);
+            //計算頻率
+
+            console.log(f0,temp,vr,vs,v,numerator,denominator,f);
+            //Debug用，可移除
+
+            var el1 = document.getElementById("output");
+            el1.innerHTML = '<p style = "font-size: large;"><center>' + f + 'Hz' +'</center></p>';
+            //顯示運算內容
+        }
+        //當收到按鈕被按下之訊息後，執行主運算
+    </script>
+</body>
+</html>
