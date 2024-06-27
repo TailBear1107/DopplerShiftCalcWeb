@@ -8,4 +8,4 @@
 請見[Releases](https://github.com/TailBear1107/DopplerShiftCalcWeb/releases)
 
 ## 目前網頁版版本
-V1.0
+V1.1
